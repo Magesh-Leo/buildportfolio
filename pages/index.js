@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import  {FaFacebook, FaLinkedinIn,FaGoogle, FaRegEnvelope,} from 'react-icons/fa'
 import {MdLockOutline} from 'react-icons/md'
+import Link from 'next/link';
 
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
@@ -54,8 +55,9 @@ export default function Home() {
             <h2 className='text-3xl font-bold mb-2'>Hey Friends!</h2>
             <div className='burder-2 w-10 border-white inline-block mb-2'></div>
             <p className=' mb-10'>Sign up with your personal data and start with us</p>
-            
-            <a href="sign-up" className='border-2 border-white rounded-full py-2 px-12 inline-block font-semibold hover:bg-white hover:text-green-500'>Sign up</a>
+            <Link href="sign-up">
+            <a className='border-2 border-white rounded-full py-2 px-12 inline-block font-semibold hover:bg-white hover:text-green-500'>Sign up</a>
+            </Link>
           </div>
         </div>
       </main>
