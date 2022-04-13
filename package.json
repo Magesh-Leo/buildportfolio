@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build": "npm i -g node-gyp sharp"
   },
   "dependencies": {
     "next": "12.1.5",
