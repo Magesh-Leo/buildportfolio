@@ -38,8 +38,8 @@ export default function signUp() {
                   <MdLockOutline className='text-gray-400 m-2'  />
                   <input type="password" name="password" placeholder='Confirm Password' className='bg-gray-100 outline-none text-sm flex-1 '/>
                 </div>
-                <Link href="/">
-                <a className='border-2 mt-5 border-green-500 text-green-500 rounded-full py-2 px-12 ml-32 inline-block font-semibold hover:bg-green-500 hover:text-white'>Sign in</a>
+                <Link href="/sign-in">
+                <a className='border-2 mt-5 border-green-500 text-green-500 rounded-full py-2 px-12 ml-32 inline-block font-semibold hover:bg-green-500 hover:text-white'>Sign Up</a>
                 </Link>
               </div>
             </div>
