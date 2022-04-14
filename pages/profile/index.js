@@ -63,7 +63,7 @@ function Profile() {
                 <div>
                 <div className="w-72 gap-4 flex flex-auto items-center justify-center my-10 mx-52">
                     <div className="mb-4">
-                        <img src="https://mdbootstrap.com//img/Photos/Square/1.jpg" className="max-w-full h-auto rounded-full" alt="profile"/>
+                        <img src='https://mdbootstrap.com//img/Photos/Square/1.jpg' className="max-w-full h-auto rounded-full" alt="profile"/>
                     </div>
                 </div>
                 <div className="flex justify-center">
