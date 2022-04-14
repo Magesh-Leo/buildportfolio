@@ -14,7 +14,7 @@ function create() {
         <form className="w-full">
             <div className="flex flex-auto -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
                         First Name
                     </label>
                     <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" />
@@ -23,7 +23,7 @@ function create() {
                     */}
                 </div>
                 <div className="w-full md:w-1/2 px-3">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
                         Last Name
                     </label>
                     <input
@@ -34,7 +34,7 @@ function create() {
                     />
                 </div>
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
                         Gender
                     </label>
                     <select className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
@@ -47,7 +47,7 @@ function create() {
                     */}
                 </div>
                 <div className="w-full md:w-1/2 px-3">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
                         Marital Status
                     </label>
                     <select className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
@@ -59,7 +59,7 @@ function create() {
             </div>
             <div className="flex flex-auto -mx-3 mb-6">
                 <div className="w-full px-3">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
                         Email
                     </label>
                     <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="email" placeholder="Example@gmail.com" />
@@ -68,7 +68,7 @@ function create() {
                     */}
                 </div>
                 <div className="w-full px-3">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
                         Linkedin id
                     </label>
                     <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="linkedIn" />
@@ -77,7 +77,7 @@ function create() {
                     */}
                 </div>
                 <div className="w-full px-3">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
                         Github id
                     </label>
                     <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Github" />
@@ -91,7 +91,7 @@ function create() {
             </div>
             <div className="flex flex-auto -mx-3 mb-2">
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
                         Nationality
                     </label>
                     <input
@@ -102,7 +102,7 @@ function create() {
                     />
                 </div>
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-state">
                         State
                     </label>
                     <div className="relative">
@@ -117,7 +117,7 @@ function create() {
                     </div>
                 </div>
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
                         City/Village
                     </label>
                     <input
@@ -128,7 +128,7 @@ function create() {
                     />
                 </div>
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
                         Zip
                     </label>
                     <input
@@ -146,21 +146,21 @@ function create() {
             <h5 className='border border-1 bg-blue-500 text-white rounded-md items-end p-2 text-2xl mb-4'>Add Row</h5>
             </div>
             <div className="flex flex-wrap -mx-3 mb-2">
-                <table class="table-auto w-full">
+                <table className="table-auto w-full">
                     <thead>
                         <tr>
-                        <th class="px-4 py-2">Qualification</th>
-                        <th class="px-4 py-2">Year of passing</th>
-                        <th class="px-4 py-2">Institue/university Name</th>
-                        <th class="px-4 py-2">Percentage</th>
+                        <th className="px-4 py-2">Qualification</th>
+                        <th className="px-4 py-2">Year of passing</th>
+                        <th className="px-4 py-2">Institue/university Name</th>
+                        <th className="px-4 py-2">Percentage</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                        <td class="border px-4 py-2">Intro to CSS</td>
-                        <td class="border px-4 py-2">Adam</td>
-                        <td class="border px-4 py-2">858</td>
-                        <td class="border px-4 py-2">858</td>
+                        <td className="border px-4 py-2">Intro to CSS</td>
+                        <td className="border px-4 py-2">Adam</td>
+                        <td className="border px-4 py-2">858</td>
+                        <td className="border px-4 py-2">858</td>
                         </tr>
                     </tbody>
                 </table>
@@ -169,9 +169,9 @@ function create() {
                 <h4 className='pt-10 font-semibold justify text-2xl mb-6'>Description</h4>
                 <h4 className='pt-10 font-semibold justify text-2xl mb-6'>picture upload</h4>
             </div>
-            <div class="flex justify-around">
-                <div class="mb-3 xl:w-96">
-                    <label for="exampleFormControlTextarea1" class="form-label inline-block mb-2 text-gray-700"
+            <div className="flex justify-around">
+                <div className="mb-3 xl:w-96">
+                    <label htmlFor="exampleFormControlTextarea1" className="form-label inline-block mb-2 text-gray-700"
                     >Example textarea</label
                     >
                     <textarea
@@ -186,8 +186,8 @@ function create() {
                     ></textarea>
                 </div>
                 <div class="mb-3 w-96">
-                    <label for="formFileMultiple" class="form-label inline-block mb-2 text-gray-700">Able to Upload Multiple files</label>
-                    <input class="form-control
+                    <label htmlFor="formFileMultiple" className="form-label inline-block mb-2 text-gray-700">Able to Upload Multiple files</label>
+                    <input className="form-control
                     block
                     w-full
                     px-3
@@ -208,7 +208,7 @@ function create() {
                 <h4 className='pt-10 font-semibold justify text-2xl mb-6'>Click here to Download Your Portfolio</h4>
             </div>
             <div className='flex flex-auto pt-10 justify-center font-semibold text-2xl'>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Download PDF
             </button>
             </div>
