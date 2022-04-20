@@ -1,26 +1,50 @@
 import React from 'react';
 import Navbar from '../core/layout';
-import img from 'next/image'
+import img from 'next/image';
+import {Formik, Form} from 'formik';
+import { profileValidation } from '../../src/Validation';
 
 function Profile() {
+    const profile = async (e)=>{
+        e.preventDefault()
+        let formData = {
+          firstname: e.target[0].value,
+          email: e.target[1].value,
+        }
+        console.log(formData)
+        const isValidSignUp = await profileValidation.isValid(formData)
+        console.log(isValidSignUp)
+    }
     return ( 
         <>
         <Navbar/>
-        <div className='flex flex-auto'>
-            <div classNameName='w-60 justify-center items-center'>
+        <div className='flex flex-row'>
+            {/* <div classNameName='w-60 justify-center items-center'> */}
+            <div className='justify-center items-center'>
                 <div className='ml-20 mr-10 mt-5'>
                     <div className='mb-6 mt-10 font-semibold text-4xl'>
                         <h1 className='font-semibold mb-6 ml'>Profile Update</h1>
                     </div>
                     <div>
-                    <form className="w-full max-w-lg">
+                    <Formik
+                    initialValues={{
+                      firstname :"",
+                      email:"",
+                    }}
+                    validationSchema={profileValidation}
+                    onSubmit = {values=> {
+                       console.log(values)
+                    }}
+                    >
+                    {formik => (
+                    <Form className='form' onSubmit={profile}>
                         <div className="flex flex-wrap -mx-3 mb-6">
                             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
                                 First Name
                             </label>
-                            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane"/>
-                            <p className="text-red-500 text-xs italic">Please fill out this field.</p>
+                            <input name='firstname' className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane"/>
+                            {/* <p className="text-red-500 text-xs italic">Please fill out this field.</p> */}
                             </div>
                             <div className="w-full md:w-1/2 px-3">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
@@ -34,7 +58,7 @@ function Profile() {
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
                                 Email
                             </label>
-                            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="email" placeholder="portfolio@gmail.com" />
+                            <input name='email' className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="email" placeholder="portfolio@gmail.com" />
                             {/* <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p> */}
                             </div>
                         </div>
@@ -55,11 +79,13 @@ function Profile() {
                                 ></textarea>
                             </div>
                         </div>
-                        </form>
+                        </Form>
+                        )}
+                    </Formik>
                     </div>
                 </div>
             </div>
-            <div classNameName='w-40 justify-center items-center'>
+            <div className='justify-center items-center'>
                 <div>
                 <div className="w-72 gap-4 flex flex-auto items-center justify-center my-10 mx-52">
                     <div className="mb-4">
