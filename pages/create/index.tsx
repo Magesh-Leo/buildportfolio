@@ -12,36 +12,66 @@ import Link from "next/link";
 
 const Create = () => {
   const router = useRouter();
-  // const initialValues : CreatePortfolioRequest = {
-  //     createdAt : "",
-  //     firstname : '',
-  //     lastname : '',
-  //     gender : '',
-  //     maritalstatus : '',
-  //     email : '',
-  //     linkedin : '',
-  //     github : '',
-  //     nationality : '',
-  //     state : '',
-  //     city : '',
-  //     zipcode : '',
-  //     description : '',
-  //     profileimg : ""
-  // };
+  interface CreatePortfolioRequest {
+    createdAt : Date,
+    firstname : string,
+    lastname : string,
+    gender : string,
+    maritalstatus : string,
+    email : string,
+    linkedin : string,
+    github : string,
+    nationality : string,
+    state : string,
+    city : string,
+    zipcode : string,
+    description : string,
+    profileimg : string
+  }
+
   const createdAt = new Date();
-  const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [linkedin, setLinkedin] = useState("");
-  const [github, setGithub] = useState("");
-  const [nationality, setNationality] = useState("");
-  const [city, setCity] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [description, setDescription] = useState("");
   const [maritalstatus, setMaritalstatus] = useState("married");
   const [gender, setGender] = useState("male");
   const [state, setState] = useState("Tamilnadu");
   const [uploadfile, setUploadfile] = useState("");
+
+  const initialValues : CreatePortfolioRequest = {
+      createdAt : new Date(),
+      firstname : '',
+      lastname : lastname,
+      gender : gender,
+      maritalstatus : maritalstatus,
+      email : '',
+      linkedin : '',
+      github : '',
+      nationality : '',
+      state : state,
+      city : '',
+      zipcode : '',
+      description : '',
+      profileimg : uploadfile
+  };
+
+  const Portfolio = async (data: CreatePortfolioRequest) => {
+    const { data: response } = await axios.post('https://625d371895cd5855d61d3b1e.mockapi.io/portfolios', data);
+    console.log('posting portfolio data', response);
+    return response;
+  };
+//   const createdAt = new Date();
+//   const [firstname, setFirstname] = useState("");
+//   const [lastname, setLastname] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [linkedin, setLinkedin] = useState("");
+//   const [github, setGithub] = useState("");
+//   const [nationality, setNationality] = useState("");
+//   const [city, setCity] = useState("");
+//   const [zipcode, setZipcode] = useState("");
+//   const [description, setDescription] = useState("");
+//   const [maritalstatus, setMaritalstatus] = useState("married");
+//   const [gender, setGender] = useState("male");
+//   const [state, setState] = useState("Tamilnadu");
+//   const [uploadfile, setUploadfile] = useState("");
 
   // const {mutate:postPortfolio, isLoading} = useMutation(CreatePortfolio,{
   //     onSuccess: () => {
@@ -53,48 +83,48 @@ const Create = () => {
   //     },
   // })
 
-  const validatePortfolio = async (e) => {
-    e.preventDefault();
-    let formData = {
-    firstname: e.target[0].value,
-    email: e.target[4].value,
-    linkedin: e.target[5].value,
-    github: e.target[6].value,
-    nationality: e.target[7].value,
-    city: e.target[9].value,
-    zipcode: e.target[10].value,
-    description: e.target[11].value,
-    };
-    const firstname = formData.firstname
-    const email = formData.email
-    const linkedin = formData.linkedin
-    const github = formData.github
-    const nationality = formData.nationality
-    const city = formData.city
-    const zipcode = formData.zipcode
-    const description = formData.description
-    axios.post('https://625d371895cd5855d61d3b1e.mockapi.io/portfolios',{
-      createdAt,
-      firstname,
-      lastname,
-      gender,
-      maritalstatus,
-      email,
-      linkedin,
-      github,
-      nationality,
-      state,
-      city,
-      zipcode,
-      description,
-      uploadfile
-    })
-    .then((res) => console.log("posting signup data", res))
-    .catch((err) => console.log(err));
-    console.log(formData);
-    const isValid = await createPortfolioValidation.isValid(formData);
-    console.log(isValid);
-  };
+//   const validatePortfolio = async (e) => {
+//     e.preventDefault();
+//     let formData = {
+//     firstname: e.target[0].value,
+//     email: e.target[4].value,
+//     linkedin: e.target[5].value,
+//     github: e.target[6].value,
+//     nationality: e.target[7].value,
+//     city: e.target[9].value,
+//     zipcode: e.target[10].value,
+//     description: e.target[11].value,
+//     };
+//     const firstname = formData.firstname
+//     const email = formData.email
+//     const linkedin = formData.linkedin
+//     const github = formData.github
+//     const nationality = formData.nationality
+//     const city = formData.city
+//     const zipcode = formData.zipcode
+//     const description = formData.description
+//     axios.post('https://625d371895cd5855d61d3b1e.mockapi.io/portfolios',{
+//       createdAt,
+//       firstname,
+//       lastname,
+//       gender,
+//       maritalstatus,
+//       email,
+//       linkedin,
+//       github,
+//       nationality,
+//       state,
+//       city,
+//       zipcode,
+//       description,
+//       uploadfile
+//     })
+//     .then((res) => console.log("posting signup data", res))
+//     .catch((err) => console.log(err));
+//     console.log(formData);
+//     const isValid = await createPortfolioValidation.isValid(formData);
+//     console.log(isValid);
+//   };
 
   // const formik = useFormik({
   //     initialValues,
@@ -153,24 +183,15 @@ const Create = () => {
             <h4>Personal Info</h4>
           </div>
           <Formik
-            initialValues={{
-              firstname: "",
-              lastname: "",
-              email: "",
-              linkedin: "",
-              github: "",
-              nationality: "",
-              city: "",
-              zipcode: "",
-              description: "",
-            }}
+            initialValues={initialValues}
             validationSchema={createPortfolioValidation}
             onSubmit={(values) => {
-              console.log(values);
+              console.log(values,values.gender=gender,values.maritalstatus=maritalstatus,values.lastname=lastname,values.state=state,values.profileimg=uploadfile);
+              {Portfolio(values)}
             }}
           >
             {(formik) => (
-              <Form className="w-full form" onSubmit={validatePortfolio}>
+              <Form className="w-full form">
                 <div className="flex flex-auto -mx-3 mb-6">
                   <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label

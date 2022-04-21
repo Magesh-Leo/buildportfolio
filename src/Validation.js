@@ -3,7 +3,7 @@ import * as yup from 'yup';
 export const signupValidation = yup.object().shape({
     username:yup.string().required("Required"),
     email:yup.string().email("Email is invalid").required("Email is Required"),
-    password:yup.string().min(6,"password must be at least 6 characters").required("password is Required"),
+    password:yup.string().min(6,"must be 6 characters").required("password is Required"),
     password2:yup.string().oneOf([yup.ref('password'),null],"password must match").required("Confirm password is Required"),
 })
 
