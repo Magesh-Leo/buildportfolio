@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField } from '../../../src/TextField';
+import { TextField } from '../../../TextField';
 
 function EducationForm(props) {
 const [qualification, setQualification] = useState('');

@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import axios from "axios";
 import Link from "next/link";
-import EducationForm from "./container/table"
+import EducationForm from "../../src/data/create/container/table"
 
 const Create = () => {
   const router = useRouter();
