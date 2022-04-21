@@ -26,7 +26,7 @@ const Create = () => {
     state: string;
     city: string;
     zipcode: string;
-    education:[];
+    education:any;
     description: string;
     profileimg: string;
   }
