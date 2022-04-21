@@ -1,4 +1,4 @@
-import React, { isValidElement, useState } from "react";
+import React, { isValidElement, useContext, useState } from "react";
 import { createPortfolioValidation } from "../../src/Validation";
 // import { CreatePortfolio } from "../../src/data/portfolio-create/create-portfolio-service";
 // import { CreatePortfolioRequest } from "../../src/data/portfolio-create/create-portfolio-request";
@@ -9,24 +9,27 @@ import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import axios from "axios";
 import Link from "next/link";
+import Educationtable from "./container/EducationTable";
+import EducationForm from "./container/table"
 
 const Create = () => {
   const router = useRouter();
   interface CreatePortfolioRequest {
-    createdAt : Date,
-    firstname : string,
-    lastname : string,
-    gender : string,
-    maritalstatus : string,
-    email : string,
-    linkedin : string,
-    github : string,
-    nationality : string,
-    state : string,
-    city : string,
-    zipcode : string,
-    description : string,
-    profileimg : string
+    createdAt: Date;
+    firstname: string;
+    lastname: string;
+    gender: string;
+    maritalstatus: string;
+    email: string;
+    linkedin: string;
+    github: string;
+    nationality: string;
+    state: string;
+    city: string;
+    zipcode: string;
+    education:[];
+    description: string;
+    profileimg: string;
   }
 
   const createdAt = new Date();
@@ -36,42 +39,48 @@ const Create = () => {
   const [state, setState] = useState("Tamilnadu");
   const [uploadfile, setUploadfile] = useState("");
 
-  const initialValues : CreatePortfolioRequest = {
-      createdAt : new Date(),
-      firstname : '',
-      lastname : lastname,
-      gender : gender,
-      maritalstatus : maritalstatus,
-      email : '',
-      linkedin : '',
-      github : '',
-      nationality : '',
-      state : state,
-      city : '',
-      zipcode : '',
-      description : '',
-      profileimg : uploadfile
+  const [educationData, setEducationdata] = useState([]);
+
+  const initialValues: CreatePortfolioRequest = {
+    createdAt: new Date(),
+    firstname: "",
+    lastname: lastname,
+    gender: gender,
+    maritalstatus: maritalstatus,
+    email: "",
+    linkedin: "",
+    github: "",
+    nationality: "",
+    state: state,
+    city: "",
+    zipcode: "",
+    education:[],
+    description: "",
+    profileimg: uploadfile,
   };
 
   const Portfolio = async (data: CreatePortfolioRequest) => {
-    const { data: response } = await axios.post('https://625d371895cd5855d61d3b1e.mockapi.io/portfolios', data);
-    console.log('posting portfolio data', response);
+    const { data: response } = await axios.post(
+      "https://625d371895cd5855d61d3b1e.mockapi.io/portfolios",
+      data
+    );
+    console.log("posting portfolio data", response);
     return response;
   };
-//   const createdAt = new Date();
-//   const [firstname, setFirstname] = useState("");
-//   const [lastname, setLastname] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [linkedin, setLinkedin] = useState("");
-//   const [github, setGithub] = useState("");
-//   const [nationality, setNationality] = useState("");
-//   const [city, setCity] = useState("");
-//   const [zipcode, setZipcode] = useState("");
-//   const [description, setDescription] = useState("");
-//   const [maritalstatus, setMaritalstatus] = useState("married");
-//   const [gender, setGender] = useState("male");
-//   const [state, setState] = useState("Tamilnadu");
-//   const [uploadfile, setUploadfile] = useState("");
+  //   const createdAt = new Date();
+  //   const [firstname, setFirstname] = useState("");
+  //   const [lastname, setLastname] = useState("");
+  //   const [email, setEmail] = useState("");
+  //   const [linkedin, setLinkedin] = useState("");
+  //   const [github, setGithub] = useState("");
+  //   const [nationality, setNationality] = useState("");
+  //   const [city, setCity] = useState("");
+  //   const [zipcode, setZipcode] = useState("");
+  //   const [description, setDescription] = useState("");
+  //   const [maritalstatus, setMaritalstatus] = useState("married");
+  //   const [gender, setGender] = useState("male");
+  //   const [state, setState] = useState("Tamilnadu");
+  //   const [uploadfile, setUploadfile] = useState("");
 
   // const {mutate:postPortfolio, isLoading} = useMutation(CreatePortfolio,{
   //     onSuccess: () => {
@@ -83,48 +92,48 @@ const Create = () => {
   //     },
   // })
 
-//   const validatePortfolio = async (e) => {
-//     e.preventDefault();
-//     let formData = {
-//     firstname: e.target[0].value,
-//     email: e.target[4].value,
-//     linkedin: e.target[5].value,
-//     github: e.target[6].value,
-//     nationality: e.target[7].value,
-//     city: e.target[9].value,
-//     zipcode: e.target[10].value,
-//     description: e.target[11].value,
-//     };
-//     const firstname = formData.firstname
-//     const email = formData.email
-//     const linkedin = formData.linkedin
-//     const github = formData.github
-//     const nationality = formData.nationality
-//     const city = formData.city
-//     const zipcode = formData.zipcode
-//     const description = formData.description
-//     axios.post('https://625d371895cd5855d61d3b1e.mockapi.io/portfolios',{
-//       createdAt,
-//       firstname,
-//       lastname,
-//       gender,
-//       maritalstatus,
-//       email,
-//       linkedin,
-//       github,
-//       nationality,
-//       state,
-//       city,
-//       zipcode,
-//       description,
-//       uploadfile
-//     })
-//     .then((res) => console.log("posting signup data", res))
-//     .catch((err) => console.log(err));
-//     console.log(formData);
-//     const isValid = await createPortfolioValidation.isValid(formData);
-//     console.log(isValid);
-//   };
+  //   const validatePortfolio = async (e) => {
+  //     e.preventDefault();
+  //     let formData = {
+  //     firstname: e.target[0].value,
+  //     email: e.target[4].value,
+  //     linkedin: e.target[5].value,
+  //     github: e.target[6].value,
+  //     nationality: e.target[7].value,
+  //     city: e.target[9].value,
+  //     zipcode: e.target[10].value,
+  //     description: e.target[11].value,
+  //     };
+  //     const firstname = formData.firstname
+  //     const email = formData.email
+  //     const linkedin = formData.linkedin
+  //     const github = formData.github
+  //     const nationality = formData.nationality
+  //     const city = formData.city
+  //     const zipcode = formData.zipcode
+  //     const description = formData.description
+  //     axios.post('https://625d371895cd5855d61d3b1e.mockapi.io/portfolios',{
+  //       createdAt,
+  //       firstname,
+  //       lastname,
+  //       gender,
+  //       maritalstatus,
+  //       email,
+  //       linkedin,
+  //       github,
+  //       nationality,
+  //       state,
+  //       city,
+  //       zipcode,
+  //       description,
+  //       uploadfile
+  //     })
+  //     .then((res) => console.log("posting signup data", res))
+  //     .catch((err) => console.log(err));
+  //     console.log(formData);
+  //     const isValid = await createPortfolioValidation.isValid(formData);
+  //     console.log(isValid);
+  //   };
 
   // const formik = useFormik({
   //     initialValues,
@@ -151,29 +160,34 @@ const Create = () => {
   //     postPortfolio(submitData);
   //     },
   // });
+  const tableRows = educationData.map((info) => {
+      console.log('tablerow',info)
+    return (      
+        <tr className="text-center" key={info.id}>
+            <td className="border px-4 py-2">{info.qualification}</td>
+            <td className="border px-4 py-2">{info.yearofpassing}</td>
+            <td className="border px-4 py-2">{info.institute}</td>
+            <td className="border px-4 py-2">{info.percentage}</td>
+            <td className="flex flex-auto border justify-center items-center py-2">
+                <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2">
+                Edit
+                </button>
+                <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2 hover:bg-red-600 hover:text-black">
+                Delete
+                </button>
+            </td>
+        </tr>
 
-//   const postData = (e) => {
-//     e.preventDefault();
-//     axios
-//       .post(`https://625d371895cd5855d61d3b1e.mockapi.io/portfolios`, {
-//         createdAt: currentDate,
-//         firstname,
-//         lastname,
-//         gender,
-//         maritalstatus,
-//         email,
-//         linkedin,
-//         github,
-//         nationality,
-//         state,
-//         city,
-//         zipcode,
-//         description,
-//         uploadfile,
-//       })
-//       .then((res) => console.log("posting data", res))
-//       .catch((err) => console.log(err));
-//   };
+    );
+  });
+  const addRows = (data) => {
+    const totalStudents = educationData.length;
+    data.id = totalStudents + 1;
+    const updatedStudentData = [...educationData];
+    updatedStudentData.push(data);
+    setEducationdata(updatedStudentData);
+  };
+  console.log('Educationdata',educationData);
   return (
     <>
       <Navbar />
@@ -186,8 +200,18 @@ const Create = () => {
             initialValues={initialValues}
             validationSchema={createPortfolioValidation}
             onSubmit={(values) => {
-              console.log(values,values.gender=gender,values.maritalstatus=maritalstatus,values.lastname=lastname,values.state=state,values.profileimg=uploadfile);
-              {Portfolio(values)}
+              console.log(
+                values,
+                (values.gender = gender),
+                (values.maritalstatus = maritalstatus),
+                (values.lastname = lastname),
+                (values.state = state),
+                (values.education = educationData),
+                (values.profileimg = uploadfile)
+              );
+              {
+                Portfolio(values);
+              }
             }}
           >
             {(formik) => (
@@ -397,14 +421,10 @@ const Create = () => {
                 </div>
                 <div className="flex flex-auto pt-10 justify-start font-semibold text-2xl">
                   <h4 className="pt-10 font-semibold justify text-2xl mb-6">
-                    Address Info
+                    Education Details
                   </h4>
                 </div>
-                <div className="flex flex-auto justify-end font-semibold text-2xl">
-                  <h5 className="border border-1 bg-blue-500 text-white rounded-md items-end p-2 text-2xl mb-4">
-                    Add Row
-                  </h5>
-                </div>
+                <EducationForm func={addRows}/>
                 <div className="flex flex-wrap -mx-3 mb-2">
                   <table className="table-auto w-full">
                     <thead>
@@ -416,12 +436,7 @@ const Create = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="text-center">
-                        <td className="border px-4 py-2">Intro to CSS</td>
-                        <td className="border px-4 py-2">Adam</td>
-                        <td className="border px-4 py-2">858</td>
-                        <td className="border px-4 py-2">89</td>
-                      </tr>
+                      {tableRows}
                     </tbody>
                   </table>
                 </div>
@@ -492,13 +507,13 @@ const Create = () => {
                   </h4>
                 </div>
                 <div className="flex flex-auto pt-10 justify-center font-semibold text-2xl">
-                    <button
-                      type="submit"
-                      // disabled={isLoading}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                    >
-                      Download PDF
-                    </button>
+                  <button
+                    type="submit"
+                    // disabled={isLoading}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                  >
+                    Download PDF
+                  </button>
                 </div>
                 <div className="flex flex-auto pt-10 justify-center font-semibold text-2xl"></div>
               </Form>
