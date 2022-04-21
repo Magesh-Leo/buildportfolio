@@ -1,4 +1,4 @@
-import { User } from "./user-context/User";
+import { User } from "../shared/user-context/User";
 
 const getLocalRefreshToken = () : User['refreshToken']=>{
     const user: User = JSON.parse(window.localStorage.getItem('user') ?? '{}');

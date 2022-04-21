@@ -77,9 +77,9 @@ function UserProvider({ children }: UserProviderProps) {
     removeUserLS();
   };
 
-  useEffect(() => {
-    reloadUser();
-  }, []);
+  // useEffect(() => {
+  //   reloadUser();
+  // }, []);
 
   const value = { userState: state, addUser, removeUser };
 
