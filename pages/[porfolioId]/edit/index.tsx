@@ -78,7 +78,7 @@ const Edit = () => {
     state: portfolio?.state || '',
     city: portfolio?.city || '',
     zipcode: portfolio?.zipcode || '',
-    education:portfolio?.education || '',
+    education:portfolio?.education || [],
     description: portfolio?.description || '',
     profileimg: portfolio?.profileimg || ''
   };
