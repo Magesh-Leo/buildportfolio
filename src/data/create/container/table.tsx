@@ -1,91 +1,74 @@
-import React, { useState } from 'react';
-import { TextField } from '../../../TextField';
-
-function EducationForm(props) {
-const [qualification, setQualification] = useState('');
-const [yearofpassing, setYearofpassing] = useState('');
-const [institute, setInstitute] = useState('');
-const [percentage, setPercentage] = useState('');
-
-const changeQualification = (event) => {
-	setQualification(event.target.value);
-};
-
-const changeYearofpassing = (event) => {
-	setYearofpassing(event.target.value);
-};
-
-const changeInstitute = (event) => {
-	setInstitute(event.target.value);
-};
-
-const changePercentage = (event) => {
-	setPercentage(event.target.value);
-};
-
-const transferValue = (event) => {
-	event.preventDefault();
-	const val = {
-	qualification,
-	yearofpassing,
-  institute,
-  percentage
-	};
-  console.log('transfervalue',val)
-	props.func(val);
-	clearState();
-};
-
-const clearState = () => {
-	setQualification('');
-	setYearofpassing('');
-  setInstitute('');
-	setPercentage('');
-};
-
-return (
-    <div className="flex flex-auto justify-around text-lg">
-          <TextField
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            name="addqualification"
-            type="text"
-            value={qualification}
-            placeholder="Qualification"
-            onChange={changeQualification}
-          />
-          <TextField
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            name="addyearofpassing"
-            value={yearofpassing}
-            type="text"
-            placeholder="Year Of Passing"
-            onChange={changeYearofpassing}
-          />
-          <TextField
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            name="addinstitute"
-            value={institute}
-            type="text"
-            placeholder="Institute/University name"
-            onChange={changeInstitute}
-          />
-          <TextField
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            name="addpercentage"
-            value={percentage}
-            type="text"
-            placeholder="Percentage"
-            onChange={changePercentage}
-          />
-          <button
-            type="submit"
-            onClick={transferValue}
-            className="border border-1 bg-blue-500 font-semibold text-white rounded-md items-end p-2 text-lg mb-4"
-          >
-            Add Row
-          </button>
-        </div>
-);
+import { Field, FieldArray } from "formik";
+import React from "react";
+function EducationRow(values,err,isSubmitting) {
+    const emptyEducation = {
+        qualification:'',
+        yearofpassing:'',
+        institute:'',
+        percentage:''
+      }
+    return ( 
+        <FieldArray name="education">
+        {({push,remove,})=>(
+          <React.Fragment>
+            {values.education.map((_,index)=>(
+              <div className="flex flex-auto justify-around text-lg mt-3" key={index}>
+              <Field
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                name={`education.${index}.qualification`}
+                type="text"
+                placeholder="Qualification"
+              />
+              <Field
+                className="appearance-none block w-full ml-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                name={`education[${index}].yearofpassing`}
+                type="text"
+                placeholder="Year of Passing"
+              />
+              <Field
+                className="appearance-none block w-full ml-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                name={`education[${index}].institute`}
+                type="text"
+                placeholder="Institute"
+              />
+              <Field
+                className="appearance-none block w-full ml-2 bg-gray-200 mr-1 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                name={`education[${index}].percentage`}
+                type="text"
+                placeholder="Percentage"
+              />
+              <button
+                type="submit"
+                onClick={()=>{
+                  // console.log('index',index)
+                  if(index>0){
+                    remove(index)
+                  }
+                }}
+                className="border border-1 bg-blue-500 font-semibold text-white rounded-md items-end p-2 text-lg"
+              >Remove
+              </button>
+              <div>
+              
+              
+              </div>
+              </div>
+            
+            ))}
+            <div className="flex flex-auto items-center justify-center mt-2">
+            <button
+                type="submit"
+                onClick={()=>push(emptyEducation)}
+                className="border border-1 py-2 px-24  bg-blue-500 font-semibold text-white rounded-md text-lg"
+              >
+                {isSubmitting ? 'Adding' : 'Add'}
+                </button>
+            </div>
+            
+          </React.Fragment>
+        )}
+      </FieldArray>
+    );
 }
 
-export default EducationForm;
+export default EducationRow;

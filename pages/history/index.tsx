@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../core/layout';
 import axios from 'axios';
+import Link from 'next/link';
 
 function History() {
     const [data,setData] = useState([])
@@ -19,7 +20,9 @@ function History() {
                 <td className="border px-4 py-2 text-sm">Null</td>
                 <td className="flex flex-auto border justify-center items-center py-2">
                     <button className='border bg-slate-800 text-white rounded-2xl px-5 py-2'>View</button>
-                    <button className='border items-end bg-slate-800 text-white rounded-2xl px-5 py-2 ml-5'>Edit</button>
+                    <Link href={`/${data.id}/edit`}>
+                        <button className='border items-end bg-slate-800 text-white rounded-2xl px-5 py-2 ml-5'>Edit</button>
+                    </Link>
                     <button className='border items-end bg-slate-800 text-white rounded-2xl px-5 py-2 ml-5'>Download</button>
                 </td>
             </tr>

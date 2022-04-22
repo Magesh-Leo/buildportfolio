@@ -1,20 +1,26 @@
-import React, { isValidElement, useContext, useEffect, useState } from "react";
-import { createPortfolioValidation } from "../../src/Validation";
-// import { CreatePortfolio } from "../../src/data/portfolio-create/create-portfolio-service";
-// import { CreatePortfolioRequest } from "../../src/data/portfolio-create/create-portfolio-request";
-import Navbar from "../core/layout";
-import { Formik, Form, useFormik, FieldArray, Field } from "formik";
-import { AreaField, TextField } from "../../src/TextField";
+import React, { isValidElement, useContext, useState } from "react";
+import { createPortfolioValidation } from "../../../src/Validation";
+import Navbar from "../../core/layout";
+import { Formik, Form, useFormik, Field, FieldArray } from "formik";
+import { AreaField, TextField } from "../../../src/TextField";
 import { useRouter } from "next/router";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import Link from "next/link";
-import EducationRow from "../../src/data/create/container/table"
+import Select from "react-select";
+import EducationForm from "../../../src/data/create/container/table"
+import EducationRow from "../../../src/data/create/container/table";
 
-const Create = () => {
+const Edit = () => {
   const router = useRouter();
-  interface CreatePortfolioRequest {
-    createdAt: Date;
+  const emptyEducation = {
+    qualification:'',
+    yearofpassing:'',
+    institute:'',
+    percentage:''
+  }
+
+  interface CreatePortfolioValues {
     firstname: string;
     lastname: string;
     gender: string;
@@ -31,71 +37,84 @@ const Create = () => {
     profileimg: string;
   }
 
-  const createdAt = new Date();
-  const [lastname, setLastname] = useState("");
   const [maritalstatus, setMaritalstatus] = useState("married");
   const [gender, setGender] = useState("male");
   const [state, setState] = useState("Tamilnadu");
   const [uploadfile, setUploadfile] = useState("");
 
   const [educationData, setEducationdata] = useState([]);
-  const emptyEducation = {
-    qualification:'',
-    yearofpassing:'',
-    institute:'',
-    percentage:''
-  }
-  const initialValues: CreatePortfolioRequest = {
-    createdAt: new Date(),
-    firstname: "",
-    lastname: "",
-    gender: gender,
-    maritalstatus: maritalstatus,
-    email: "",
-    linkedin: "",
-    github: "",
-    nationality: "",
-    state: state,
-    city: "",
-    zipcode: "",
-    education:[emptyEducation],
-    description: "",
-    profileimg: uploadfile,
-  };
 
-  const Portfolio = async (data: CreatePortfolioRequest) => {
-    const { data: response } = await axios.post(
-      "https://625d371895cd5855d61d3b1e.mockapi.io/portfolios",
-      data
+  const portfolioId = router.query.porfolioId
+    ? (router.query.porfolioId as string)
+    : '';
+
+//   console.log('Portfoloio Edit id',portfolioId)
+
+  const Portfolio = async (id:string) => {
+    const { data: response } = await axios.get(
+      `https://625d371895cd5855d61d3b1e.mockapi.io/portfolios/${id}`,
     );
-    console.log("posting portfolio data", response);
+    console.log(`portfolio data for id ${portfolioId}`, response);
     return response;
   };
 
-  // const tableRows = educationData.map((info) => {
-  //     console.log('tablerow',info)
-  //   return (
-  //       <tr className="text-center" key={info.id}>
-  //           <td className="border px-4 py-2">{info.qualification}</td>
-  //           <td className="border px-4 py-2">{info.yearofpassing}</td>
-  //           <td className="border px-4 py-2">{info.institute}</td>
-  //           <td className="border px-4 py-2">{info.percentage}</td>
-  //           <td className="flex flex-auto border justify-center items-center py-2">
-  //               <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2">
-  //               Edit
-  //               </button>
-  //               <button type="submit" className="border bg-slate-800 text-white rounded-2xl px-5 py-2 hover:bg-red-600 hover:text-black"
-  //               onClick={()=>(info)}>
-  //               Delete
-  //               </button>
-  //           </td>
-  //       </tr>
-  //   );
-  // });
+  const { data: portfolio, isLoading } = useQuery(
+    'Portfolio',
+    () => Portfolio(portfolioId),
+    {
+      enabled: router.isReady,
+    }
+  );
 
-  const EducationRow = (values,err,isSubmitting)=>{
-    return (
-      <FieldArray name="education">
+  const initialValues: CreatePortfolioValues = {
+    firstname: portfolio?.firstname || '',
+    lastname: portfolio?.lastname || '',
+    gender: portfolio?.gender || '',
+    maritalstatus: portfolio?.maritalstatus || '',
+    email: portfolio?.email || '',
+    linkedin: portfolio?.linkedin || '',
+    github: portfolio?.github || '',
+    nationality: portfolio?.nationality || '',
+    state: portfolio?.state || '',
+    city: portfolio?.city || '',
+    zipcode: portfolio?.zipcode || '',
+    education:portfolio?.education || '',
+    description: portfolio?.description || '',
+    profileimg: portfolio?.profileimg || ''
+  };
+
+  const updatePortfolio = async(data: CreatePortfolioValues)=>{
+    await axios.put(`https://625d371895cd5855d61d3b1e.mockapi.io/portfolios/${portfolioId}`,data)
+    .then(res=>{
+        console.log("Updating from api",res.data)
+    }).catch(err=>console.log(err))
+  }
+//   console.log("Initial values",initialValues);
+  
+  const tableRows = educationData.map((info) => {
+    //   console.log('tablerow',info)
+    return (      
+        <tr className="text-center" key={info.id}>
+            <td className="border px-4 py-2">{info.qualification}</td>
+            <td className="border px-4 py-2">{info.yearofpassing}</td>
+            <td className="border px-4 py-2">{info.institute}</td>
+            <td className="border px-4 py-2">{info.percentage}</td>
+            <td className="flex flex-auto border justify-center items-center py-2">
+                <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2">
+                Edit
+                </button>
+                <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2 hover:bg-red-600 hover:text-black">
+                Delete
+                </button>
+            </td>
+        </tr>
+
+    );
+  });
+
+  const EditRow = (values,err,isSubmitting)=>{
+      return(
+        <FieldArray name="education">
         {({push,remove,})=>(
           <React.Fragment>
             {values.education.map((_,index)=>(
@@ -155,37 +174,28 @@ const Create = () => {
           </React.Fragment>
         )}
       </FieldArray>
-    )
-    
+      )
   }
 
-  // <tr key={index}>
-  //               <input name={`education[${index}].qualification`}/>
-  //               <input name={`education[${index}].yearofpassing`}/>
-  //               <input name={`education[${index}].institute`}/>
-  //               <input name={`education[${index}].percentage`}/>
-  //               <td>
-  //                   <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2">
-  //                   Edit
-  //                   </button>
-  //                   <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2 hover:bg-red-600 hover:text-black"
-  //                   onClick={()=>remove(index)}>
-  //                   Delete
-  //                   </button>
-  //               </td>
-  //               <button disabled={isSubmitting} type="submit" onClick={()=>push({qualification:'',yearofpassing:'',institute:'',percentage:''})}>{isSubmitting ? 'Adding' : 'Add'}</button>
-  //           </tr>
-
-  // const addRows = (data) => {
-  //   const totalStudents = educationData.length;
-  //   data.id = totalStudents + 1;
-  //   const updatedStudentData = [...educationData];
-  //   updatedStudentData.push(data);
-  //   setEducationdata(updatedStudentData);
-  // };
+//   const addRows = (data) => {
+//     const totalStudents = educationData.length;
+//     data.id = totalStudents + 1;
+//     const updatedStudentData = [...educationData];
+//     updatedStudentData.push(data);
+//     setEducationdata(updatedStudentData);
+//   };
+//   console.log('Educationdata',educationData);
+  
   return (
     <>
       <Navbar />
+      {isLoading ? (
+    <>
+        <h1 className="text-2xl text-center justify-center items-center text-indigo-800">
+        Please wait...
+        </h1>
+    </>
+    ) : (
       <div className="w-full justify-center items-center">
         <div className="ml-10 mr-10 mt-5">
           <div className="mb-6 mt-10 font-semibold text-2xl">
@@ -194,18 +204,16 @@ const Create = () => {
           <Formik
             initialValues={initialValues}
             validationSchema={createPortfolioValidation}
-            onSubmit={ async (values) => {
-              console.log(
-                values,
+            enableReinitialize={true}
+            onSubmit={(values) => {
+              console.log('Edited Values',values,
                 (values.gender = gender),
                 (values.maritalstatus = maritalstatus),
                 (values.state = state),
-                (values.profileimg = uploadfile)
-              );
+                (values.profileimg = uploadfile));
               {
-                Portfolio(values);
+                  updatePortfolio(values)
               }
-              return new Promise(res=>setTimeout(res,2500));
             }}
           >
             {({values,errors, isSubmitting}) => (
@@ -249,16 +257,24 @@ const Create = () => {
                     >
                       Gender
                     </label>
-                    <select
+                    <Field
+                      as='select'
                       name="gender"
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     >
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Transgender">Transgender</option>
-                    </select>
+                    </Field>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg
+                          className="fill-current h-4 w-4"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                        </svg>
+                      </div>
                     {/*
                     <p className="text-red-500 text-xs italic">Please fill out this field.</p>
                     */}
@@ -270,15 +286,23 @@ const Create = () => {
                     >
                       Marital Status
                     </label>
-                    <select
+                    <Field
+                      as='select'
                       name="maritalstatus"
-                      value={maritalstatus}
-                      onChange={(e) => setMaritalstatus(e.target.value)}
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     >
                       <option value="married">Married</option>
                       <option value="unmarried">Unmarried</option>
-                    </select>
+                    </Field>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg
+                          className="fill-current h-4 w-4"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                        </svg>
+                      </div>
                   </div>
                 </div>
                 <div className="flex flex-auto -mx-3 mb-6">
@@ -360,17 +384,16 @@ const Create = () => {
                       State
                     </label>
                     <div className="relative">
-                      <select
+                      <Field
+                        as="select"
                         name="state"
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
                         className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       >
                         <option value="Tamilnadu">Tamil Nadu</option>
                         <option value="Kerala">Kerala</option>
                         <option value="Andrapradhesh">Andra pradesh</option>
                         <option value="karnataka">Karnataka</option>
-                      </select>
+                      </Field>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         <svg
                           className="fill-current h-4 w-4"
@@ -416,23 +439,9 @@ const Create = () => {
                     Education Details
                   </h4>
                 </div>
-                {EducationRow(values,errors,isSubmitting)}
-                {/* <EducationForm func={addRows}/>
-                <div className="flex flex-wrap -mx-3 mb-2">
-                  <table className="table-auto w-full">
-                    <thead>
-                      <tr>
-                        <th className="px-4 py-2">Qualification</th>
-                        <th className="px-4 py-2">Year of passing</th>
-                        <th className="px-4 py-2">Institue/university Name</th>
-                        <th className="px-4 py-2">Percentage</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      
-                    </tbody>
-                  </table>
-                </div> */}
+
+                {EditRow(values,errors,isSubmitting)}
+
                 <div className="flex flex-auto pt-10 justify-around font-semibold text-2xl">
                   <h4 className="pt-10 font-semibold justify text-2xl mb-6">
                     Description
@@ -514,8 +523,9 @@ const Create = () => {
           </Formik>
         </div>
       </div>
+    )}
     </>
   );
 };
 
-export default Create;
+export default Edit;

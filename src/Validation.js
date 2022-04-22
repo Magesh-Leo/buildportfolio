@@ -14,6 +14,7 @@ export const signinValidation = yup.object().shape({
 
 export const createPortfolioValidation = yup.object().shape({
     firstname:yup.string().min(4,"Enter your name here").required("Required*"),
+    lastname:yup.string().required("Required*"),
     email:yup.string().email("Email is Invalid").required("Email is Required*"),
     linkedin:yup.string().min(6,"name must be atleast 6 characters").required("Required*"),
     github:yup.string().min(6,"name must be atleast 6 characters").required("Required*"),
