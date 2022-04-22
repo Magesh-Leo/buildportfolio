@@ -49,13 +49,13 @@ const Create = () => {
     createdAt: new Date(),
     firstname: "",
     lastname: "",
-    gender: gender,
-    maritalstatus: maritalstatus,
+    gender: "male",
+    maritalstatus: "married",
     email: "",
     linkedin: "",
     github: "",
     nationality: "",
-    state: state,
+    state: "Tamilnadu",
     city: "",
     zipcode: "",
     education:[emptyEducation],
@@ -195,12 +195,8 @@ const Create = () => {
             initialValues={initialValues}
             validationSchema={createPortfolioValidation}
             onSubmit={ async (values) => {
-              console.log(
-                values,
-                (values.gender = gender),
-                (values.maritalstatus = maritalstatus),
-                (values.state = state),
-                (values.profileimg = uploadfile)
+              console.log("Create Value",
+                values
               );
               {
                 Portfolio(values);
@@ -249,16 +245,15 @@ const Create = () => {
                     >
                       Gender
                     </label>
-                    <select
+                    <Field
+                      as='select'
                       name="gender"
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     >
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Transgender">Transgender</option>
-                    </select>
+                    </Field>
                     {/*
                     <p className="text-red-500 text-xs italic">Please fill out this field.</p>
                     */}
@@ -270,15 +265,14 @@ const Create = () => {
                     >
                       Marital Status
                     </label>
-                    <select
+                    <Field
+                      as='select'
                       name="maritalstatus"
-                      value={maritalstatus}
-                      onChange={(e) => setMaritalstatus(e.target.value)}
                       className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                     >
                       <option value="married">Married</option>
                       <option value="unmarried">Unmarried</option>
-                    </select>
+                    </Field>
                   </div>
                 </div>
                 <div className="flex flex-auto -mx-3 mb-6">
@@ -360,17 +354,16 @@ const Create = () => {
                       State
                     </label>
                     <div className="relative">
-                      <select
+                      <Field
+                        as='select'
                         name="state"
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
                         className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       >
                         <option value="Tamilnadu">Tamil Nadu</option>
                         <option value="Kerala">Kerala</option>
                         <option value="Andrapradhesh">Andra pradesh</option>
                         <option value="karnataka">Karnataka</option>
-                      </select>
+                      </Field>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         <svg
                           className="fill-current h-4 w-4"

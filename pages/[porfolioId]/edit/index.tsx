@@ -37,12 +37,12 @@ const Edit = () => {
     profileimg: string;
   }
 
-  const [maritalstatus, setMaritalstatus] = useState("married");
-  const [gender, setGender] = useState("male");
-  const [state, setState] = useState("Tamilnadu");
-  const [uploadfile, setUploadfile] = useState("");
+//   const [maritalstatus, setMaritalstatus] = useState("married");
+//   const [gender, setGender] = useState("male");
+//   const [state, setState] = useState("Tamilnadu");
+//   const [uploadfile, setUploadfile] = useState("");
 
-  const [educationData, setEducationdata] = useState([]);
+//   const [educationData, setEducationdata] = useState([]);
 
   const portfolioId = router.query.porfolioId
     ? (router.query.porfolioId as string)
@@ -91,26 +91,26 @@ const Edit = () => {
   }
 //   console.log("Initial values",initialValues);
   
-  const tableRows = educationData.map((info) => {
-    //   console.log('tablerow',info)
-    return (      
-        <tr className="text-center" key={info.id}>
-            <td className="border px-4 py-2">{info.qualification}</td>
-            <td className="border px-4 py-2">{info.yearofpassing}</td>
-            <td className="border px-4 py-2">{info.institute}</td>
-            <td className="border px-4 py-2">{info.percentage}</td>
-            <td className="flex flex-auto border justify-center items-center py-2">
-                <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2">
-                Edit
-                </button>
-                <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2 hover:bg-red-600 hover:text-black">
-                Delete
-                </button>
-            </td>
-        </tr>
+//   const tableRows = educationData.map((info) => {
+//     //   console.log('tablerow',info)
+//     return (      
+//         <tr className="text-center" key={info.id}>
+//             <td className="border px-4 py-2">{info.qualification}</td>
+//             <td className="border px-4 py-2">{info.yearofpassing}</td>
+//             <td className="border px-4 py-2">{info.institute}</td>
+//             <td className="border px-4 py-2">{info.percentage}</td>
+//             <td className="flex flex-auto border justify-center items-center py-2">
+//                 <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2">
+//                 Edit
+//                 </button>
+//                 <button className="border bg-slate-800 text-white rounded-2xl px-5 py-2 hover:bg-red-600 hover:text-black">
+//                 Delete
+//                 </button>
+//             </td>
+//         </tr>
 
-    );
-  });
+//     );
+//   });
 
   const EditRow = (values,err,isSubmitting)=>{
       return(
@@ -206,14 +206,11 @@ const Edit = () => {
             validationSchema={createPortfolioValidation}
             enableReinitialize={true}
             onSubmit={(values) => {
-              console.log('Edited Values',values,
-                (values.gender = gender),
-                (values.maritalstatus = maritalstatus),
-                (values.state = state),
-                (values.profileimg = uploadfile));
+              console.log('Edited Values',values);
               {
-                  updatePortfolio(values)
+                updatePortfolio(values)
               }
+            //   return new Promise(res=>setTimeout(res,2500));
             }}
           >
             {({values,errors, isSubmitting}) => (
