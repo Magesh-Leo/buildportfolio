@@ -40,7 +40,7 @@ const Edit = () => {
 //   const [maritalstatus, setMaritalstatus] = useState("married");
 //   const [gender, setGender] = useState("male");
 //   const [state, setState] = useState("Tamilnadu");
-//   const [uploadfile, setUploadfile] = useState("");
+  const [uploadfile, setUploadfile] = useState("");
 
 //   const [educationData, setEducationdata] = useState([]);
 
@@ -493,8 +493,8 @@ const Edit = () => {
                       name="profileimg"
                       id="formFile"
                       onChange={(e) => {
-                        console.log(e.target.files);
-                        console.log(e.target.files[0]);
+                        // console.log(e.target.files);
+                        // console.log(e.target.files[0]);
                         setUploadfile(e.target.files[0].name);
                       }}
                     />

@@ -31,11 +31,11 @@ const Create = () => {
     profileimg: string;
   }
 
-  const createdAt = new Date();
-  const [lastname, setLastname] = useState("");
-  const [maritalstatus, setMaritalstatus] = useState("married");
-  const [gender, setGender] = useState("male");
-  const [state, setState] = useState("Tamilnadu");
+  // const createdAt = new Date();
+  // const [lastname, setLastname] = useState("");
+  // const [maritalstatus, setMaritalstatus] = useState("married");
+  // const [gender, setGender] = useState("male");
+  // const [state, setState] = useState("Tamilnadu");
   const [uploadfile, setUploadfile] = useState("");
 
   const [educationData, setEducationdata] = useState([]);
